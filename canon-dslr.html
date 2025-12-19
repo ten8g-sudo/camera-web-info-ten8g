@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Camera Info Web</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#e9e9e9;
+      --card:#f6f6f6;
+      --muted:#000000;
+      --accent:#c41a1a;
+      --shadow: 0 6px 0 rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: 'Montserrat', system-ui, -apple-system, Arial;
+      background:var(--bg);
+      color:#555555;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* top navbar */
+    .topbar{
+      background:linear-gradient(#fff,#f3f3f3);
+      box-shadow:0 4px 8px rgba(0,0,0,0.12);
+      padding:18px 36px;
+      display:flex;
+      align-items:center;
+      gap:28px;
+      position:sticky;
+      top:0;
+      z-index:50;
+    }
+    .logo{
+      background:#6e6e6e;
+      color:#fff;
+      padding:18px 36px;
+      border-radius:2px;
+      font-weight:600;
+      letter-spacing:1px;
+      font-size:20px;
+    }
+    .nav { display:flex; gap:34px; align-items:center; margin:0 auto; }
+    .nav a{
+      text-decoration:none;
+      font-size:30px;
+      color:#222;
+      text-shadow:0 2px 0 rgba(0,0,0,0.12);
+      padding:8px 14px;
+      border-radius:4px;
+    }
+    .nav a.active{
+      background:var(--accent);
+      color:#fff;
+      box-shadow:var(--shadow);
+      font-weight:700;
+    }
+
+    /* hero banner */
+    .hero-wrap{
+      padding:18px 40px 0 40px;
+    }
+    .hero{
+      width:100%;
+      background:#000;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 6px 14px rgba(0,0,0,0.25);
+      padding:12px;
+    }
+    .hero img{display:block; width:100%; height:200px; object-fit:cover; border-radius:10px}
+
+    /* category buttons */
+    .cats{display:flex; justify-content:center; gap:18px; padding:26px 12px}
+    .cat{background:var(--card); padding:14px 26px; border-radius:10px; box-shadow:var(--shadow); font-size:18px}
+    .cat.active{background:#7b7b7b; color:#fff}
+
+    /* product grid */
+    .container{max-width:1200px; margin:8px auto; padding:0 24px 80px}
+    .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:28px; margin-top:18px}
+    .product{
+      background:var(--card);
+      padding:28px;
+      border-radius:18px;
+      box-shadow:0 6px 0 rgba(0,0,0,0.06);
+      border:1px solid rgba(0,0,0,0.06);
+    }
+    .product h3{ text-align:center; color:var(--muted); font-weight:400; margin:0 0 14px}
+    .media{display:flex; gap:28px; align-items:center}
+    .media img{width:240px; max-width:40%; border-radius:8px; box-shadow:0 8px 30px rgba(0,0,0,0.12); background:#fff}
+    .specs{flex:1}
+    .bar{height:16px; background:#d0d0d0; border-radius:8px; margin:10px 0}
+    .price{ text-align:right; font-size:20px; color:var(--muted); margin-top:18px }
+
+    /* responsive */
+    @media(max-width:900px){
+      .nav a{font-size:20px}
+      .hero img{height:140px}
+      .grid{grid-template-columns:1fr}
+      .media img{max-width:45%}
+    }
+    @media(max-width:520px){
+      .logo{padding:12px 20px; font-size:16px}
+      .nav{gap:8px}
+      .nav a{display:none}
+      .nav a.active{display:inline-block}
+      .hero img{height:120px}
+      .media{flex-direction:column; align-items:center}
+      .media img{width:70%; max-width:300px}
+      .price{text-align:center}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="Homeweb.html">
+    <img src="https://img5.pic.in.th/file/secure-sv1/logowebmain.png" alt="logo"></a>
+    <nav class="nav">
+      <a class="active" href="#">Canon</a>
+      <a href="sony.html">Sony</a>
+      <a href="nikon-dslr.html">Nikon</a>
+      <a href="Fujifilm-mrl.html">Fujifilm</a>
+      <a href="Olympus.html">Olympus</a>
+    </nav>
+  </header>
+
+  <style>
+  .hero-wrap {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 18px; /* 👈 เพิ่มขอบมน */
+  }
+
+  .hero-slider {
+    position: relative;
+    width: 100%;
+    height: 400px; /* ปรับได้ */
+    border-radius: 18px; /* 👈 บังคับขอบมน */
+    overflow: hidden;    /* ให้ภาพไม่ทะลุขอบ */
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1s ease;
+    border-radius: 18px;  /* 👈 ขอบมนในสไลด์ */
+    overflow: hidden;
+  }
+
+  .hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 18px; /* 👈 ขอบมนให้ตัวภาพ */
+  }
+
+  .hero-slide.active {
+    opacity: 1;
+  }
+</style>
+
+<section class="hero-wrap">
+  <div class="hero-slider">
+
+    <!-- Slide 1 -->
+    <div class="hero-slide active">
+      <img src="https://images.pexels.com/photos/2927762/pexels-photo-2927762.jpeg?cs=srgb&dl=pexels-adilgkkya-2927762.jpg&fm=jpg" alt="slide1" />
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="hero-slide">
+      <img src="https://livingasean.com/wp-content/uploads/2016/05/Canon-banner.jpg" alt="slide2" />
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="hero-slide">
+      <img src="https://britishcinematographer.co.uk/wp-content/uploads/2021/05/CVP-Canon-in-Motion-Social-Banner-Proof1.png" alt="slide3" />
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="hero-slide">
+      <img src="https://shop.sg.canon/media/mageplaza/blog/post/uploads/2018/09/Canon_Corporate_Site_Banner.jpg" alt="slide4" />
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="hero-slide">
+      <img src="https://d1hjkbq40fs2x4.cloudfront.net/2016-10-21/files/EOSM5-IG.jpg" alt="slide5" />
+    </div>
+
+  </div>
+</section>
+
+<script>
+  let index = 0;
+  const slides = document.querySelectorAll(".hero-slide");
+
+  setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+  }, 4000);
+</script>
+
+  <main class="container">
+    <div class="cats">
+      <!-- ปุุ่ม 1 -->
+      <div class="cat"
+     onclick="location.href='canon-eosr.html'
+     "style="cursor:pointer;">กล้อง MRL (EOS R)</div>
+      <!-- ปุุ่ม 2 -->
+      <div class="cat active"
+     onclick="location.href='canon-dslr.html'
+    "style="cursor:pointer;">กล้อง DSLR (EOS)</div>
+      <!-- ปุุ่ม 3 -->
+      <div class="cat"
+     onclick="location.href='canon-eosm.html'
+    "style="cursor:pointer;">กล้อง MRL (EOS M)</div>
+    </div>
+
+    <div class="grid">
+      <!-- Product card 1 -->
+      <article class="product">
+        <h3>Canon EOS-1D X Mark III</h3>
+        <div class="media">
+          <img src="https://th.canon/media/image/2020/01/06/429197eea6fc435c86bfef562852d832_EOS-1D-X-Mark-III-Front-362.png" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ฟูลเฟรม 20.1 ล้านพิกเซล</p>
+            <p>ถ่ายภาพต่อเนื่องสูงสุด 16 fps</p>
+            <p>ระบบออโต้โฟกัส 191 จุด</p>
+            <p>บันทึกวิดีโอ 5.5K RAW/60p</p>
+            <div class="price">THB 242,900.00</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product card 2 -->
+      <article class="product">
+        <h3>Canon EOS 5D Mark IV</h3>
+        <div class="media">
+          <img src="https://th.canon/media/image/2018/07/03/8a2741e6db5f49f5b7ae91e34c3ad045_eos-5d-mk-iv-body-b21.png" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ฟูลเฟรม 30.4 ล้านพิกเซล</p>
+            <p>ระบบออโต้โฟกัส 61 จุด</p>
+            <p>ถ่ายวิดีโอ 4K/30p</p>
+            <p>ถ่ายภาพต่อเนื่อง 7 ภาพต่อวินาที</p>
+            <div class="price">THB 134,900.00</div>
+          </div>
+        </div>
+      </article>
+
+    <!-- Product card 3 -->
+      <article class="product">
+        <h3>Canon EOS 6D Mark II</h3>
+        <div class="media">
+          <img src="https://th.canon/media/migration/shared/live/products/TH/eos6d-mkii-body-b1.png" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ฟูลเฟรม 20.1 ล้านพิกเซล</p>
+            <p>ระบบออโต้โฟกัส 45 จุดแบบ Cross-type</p>
+            <p>ISO 100-40000 (ขยายได้ถึง 102400)</p>
+            <p>ถ่ายวิดีโอ Full HD 60p</p>
+            <div class="price">THB 68,000.00</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product card 4 -->
+      <article class="product">
+        <h3>Canon EOS 90D</h3>
+        <div class="media">
+          <img src="https://th.canon/media/image/2019/08/27/57604d3575b84323b2f75c125d43dbc4_7_EOS+90D_BK_TheFront_Body.png" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ APS-C ความละเอียด 32.5 ล้าน</p>
+            <p>ระบบประมวลผลภาพ DIGIC 8</p>
+            <p>ออโต้โฟกัสแบบ Cross-type 45 จุด</p>
+            <p>ถ่ายภาพต่อเนื่องสูงสุด 10 ภาพต่อวินาที</p>
+            <div class="price">THB 41,900.00</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product card 5 -->
+      <article class="product">
+        <h3>Canon EOS 850D</h3>
+        <div class="media">
+          <img src="https://asia.canon/media/image/2020/02/11/12ddda154fc94721834725a36b3b1ebd_EOS+850D+Front.png" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ APS-C ความละเอียด 24.1 ล้าน</p>
+            <p>จุดโฟกัส 45 จุดแบบ Cross-type</p>
+            <p>ถ่ายภาพต่อเนื่องสูงสุด 7.0 fps</p>
+            <p>เชื่อมต่อ Wi-Fi และ Bluetooth</p>
+            <div class="price">THB 33,900.00</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product card 6 -->
+      <article class="product">
+        <h3>Canon EOS 3000D</h3>
+        <div class="media">
+          <img src="https://th.canon/media/image/2018/03/25/141b3157be3c414583055d976e70a9db_eos-3000d_b1.png" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ APS-C ความละเอียด 18 ล้าน</p>
+            <p>ชิปประมวลผล DIGIC 4+</p>
+            <p>ระบบโฟกัส 9 จุด</p>
+            <p>ถ่ายวิดีโอ Full HD 30p และมี Wi-Fi</p>
+            <div class="price">THB 15,900.00</div>
+          </div>
+        </div>
+      </article>
+
+      </div>
+
+    <!-- more product rows (copy/paste as needed) -->
+
+  </main>
+
+</body>
+
+</html>

@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Camera Info Web</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#e9e9e9;
+      --card:#f6f6f6;
+      --muted:#000000;
+      --accent:#EE1337;
+      --shadow: 0 6px 0 rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: 'Montserrat', system-ui, -apple-system, Arial;
+      background:var(--bg);
+      color:#555555;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* top navbar */
+    .topbar{
+      background:linear-gradient(#fff,#f3f3f3);
+      box-shadow:0 4px 8px rgba(0,0,0,0.12);
+      padding:18px 36px;
+      display:flex;
+      align-items:center;
+      gap:28px;
+      position:sticky;
+      top:0;
+      z-index:50;
+    }
+    .logo{
+      background:#6e6e6e;
+      color:#fff;
+      padding:18px 36px;
+      border-radius:2px;
+      font-weight:600;
+      letter-spacing:1px;
+      font-size:20px;
+    }
+    .nav { display:flex; gap:34px; align-items:center; margin:0 auto; }
+    .nav a{
+      text-decoration:none;
+      font-size:30px;
+      color:#222;
+      text-shadow:0 2px 0 rgba(0,0,0,0.12);
+      padding:8px 14px;
+      border-radius:4px;
+    }
+    .nav a.active{
+      background:var(--accent);
+      color:#fff;
+      box-shadow:var(--shadow);
+      font-weight:700;
+    }
+
+    /* hero banner */
+    .hero-wrap{
+      padding:18px 40px 0 40px;
+    }
+    .hero{
+      width:100%;
+      background:#000;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 6px 14px rgba(0,0,0,0.25);
+      padding:12px;
+    }
+    .hero img{display:block; width:100%; height:200px; object-fit:cover; border-radius:10px}
+
+    /* category buttons */
+    .cats{display:flex; justify-content:center; gap:18px; padding:26px 12px}
+    .cat{background:var(--card); padding:14px 26px; border-radius:10px; box-shadow:var(--shadow); font-size:18px}
+    .cat.active{background:#7b7b7b; color:#fff}
+
+    /* product grid */
+    .container{max-width:1200px; margin:8px auto; padding:0 24px 80px}
+    .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:28px; margin-top:18px}
+    .product{
+      background:var(--card);
+      padding:28px;
+      border-radius:18px;
+      box-shadow:0 6px 0 rgba(0,0,0,0.06);
+      border:1px solid rgba(0,0,0,0.06);
+    }
+    .product h3{ text-align:center; color:var(--muted); font-weight:400; margin:0 0 14px}
+    .media{display:flex; gap:28px; align-items:center}
+    .media img{width:240px; max-width:40%; border-radius:8px; box-shadow:0 8px 30px rgba(0,0,0,0.12); background:#fff}
+    .specs{flex:1}
+    .bar{height:16px; background:#d0d0d0; border-radius:8px; margin:10px 0}
+    .price{ text-align:right; font-size:20px; color:var(--muted); margin-top:18px }
+
+    /* responsive */
+    @media(max-width:900px){
+      .nav a{font-size:20px}
+      .hero img{height:140px}
+      .grid{grid-template-columns:1fr}
+      .media img{max-width:45%}
+    }
+    @media(max-width:520px){
+      .logo{padding:12px 20px; font-size:16px}
+      .nav{gap:8px}
+      .nav a{display:none}
+      .nav a.active{display:inline-block}
+      .hero img{height:120px}
+      .media{flex-direction:column; align-items:center}
+      .media img{width:70%; max-width:300px}
+      .price{text-align:center}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="Homeweb.html">
+    <img src="https://img5.pic.in.th/file/secure-sv1/logowebmain.png" alt="logo"></a>
+    <nav class="nav">
+      <a class href="canon-dslr.html">Canon</a>
+      <a href="sony.html">Sony</a>
+      <a href="nikon-dslr.html">Nikon</a>
+      <a href="Fujifilm-mrl.html">Fujifilm</a>
+      <a class="active" href="Olympus.html">Olympus</a>
+    </nav>
+  </header>
+
+  <style>
+  .hero-wrap {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 18px; /* 👈 เพิ่มขอบมน */
+  }
+
+  .hero-slider {
+    position: relative;
+    width: 100%;
+    height: 400px; /* ปรับได้ */
+    border-radius: 18px; /* 👈 บังคับขอบมน */
+    overflow: hidden;    /* ให้ภาพไม่ทะลุขอบ */
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1s ease;
+    border-radius: 18px;  /* 👈 ขอบมนในสไลด์ */
+    overflow: hidden;
+  }
+
+  .hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 18px; /* 👈 ขอบมนให้ตัวภาพ */
+  }
+
+  .hero-slide.active {
+    opacity: 1;
+  }
+</style>
+
+<section class="hero-wrap">
+  <div class="hero-slider">
+
+    <!-- Slide 1 -->
+    <div class="hero-slide active">
+      <img src="https://www.olympus-europa.com/company/media/content/news/cpd-camera-and-audio/190829-break-free-from-heavy-gear/190828_oly_bcc_anzeigen_extraformat_quer_estefany_02_img_1200.jpg" alt="slide1" />
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="hero-slide">
+      <img src="https://www.olympus-europa.com/company/media/content/news/cpd-camera-and-audio/190829-break-free-from-heavy-gear/190828_oly_bcc_anzeigen_extraformat_quer_nicolaus_02.jpg" alt="slide2" />
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="hero-slide">
+      <img src="https://cdn.mos.cms.futurecdn.net/DgXMskXHnyVBtYcfVj3CAG-1200-80.jpg" alt="slide3" />
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="hero-slide">
+      <img src="https://cdn.fstoppers.com/styles/large-16-9/s3/lead/2021/03/d59656338766cec4fbb17e65e9d255bd.jpg" alt="slide4" />
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="hero-slide">
+      <img src="https://i0.wp.com/kosmofoto.com/wp-content/uploads/2020/06/trio.jpg?resize=3000%2C2250&quality=88&ssl=1" alt="slide5" />
+    </div>
+
+  </div>
+</section>
+
+<script>
+  let index = 0;
+  const slides = document.querySelectorAll(".hero-slide");
+
+  setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+  }, 4000);
+</script>
+
+  <main class="container">
+    <div class="cats">
+      <!-- ปุุ่ม 1 -->
+      <div class="cat active"
+     onclick="location.href='Olympus.html'
+    "style="cursor:pointer;">OM System</div>
+
+    </div>
+
+    <div class="grid">
+      <!-- Product card 1 -->
+      <article class="product">
+        <h3>Olympus OM‑1</h3>
+        <div class="media">
+          <img src="https://www.bigcamera.co.th/media/catalog/product/cache/6cfb1b58b487867e47102a5ca923201b/1/6/1644886121_1688415_2.jpg" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ Stacked BSI Live MOS</p>
+            <p>ถ่ายภาพต่อเนื่องได้สูงสุด 120 fps</p>
+            <p>กันสั่น 5 แกน 7 สต็อป</p>
+            <p>วิดีโอ 4K 60p</p>
+            <div class="price">THB 84,990.00</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product card 2 -->
+      <article class="product">
+        <h3>Olympus OM‑D E‑M5 Mark III</h3>
+        <div class="media">
+          <img src="https://www.zoomcamera.net/wp-content/uploads/2019/12/omd-em5-mk3-1.jpg" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ความละเอียด 20.4 ล้าน</p>
+            <p>ระบบโฟกัส 121 จุด</p>
+            <p>ปรเซสเซอร์ TruePic VIII</p>
+            <p>ถ่ายภาพต่อเนื่องสูงสุด 10 ภาพ</p>
+            <div class="price">THB 64,990.00</div>
+          </div>
+        </div>
+      </article>
+
+    <!-- Product card 3 -->
+      <article class="product">
+        <h3>Olympus OM‑5</h3>
+        <div class="media">
+          <img src="https://www.zoomcamera.net/wp-content/uploads/2019/07/OMD-EM5-II-1.jpg" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ Micro Four Thirds</p>
+            <p>ระบบกันสั่น 5 แกน</p>
+            <p>จุดโฟกัส Phase-Detect 121 จุด</p>
+            <p>วิดีโอ 4K และมีการซีลกันละอองน้ำ</p>
+            <div class="price">THB 38,990.00</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product card 4 -->
+      <article class="product">
+        <h3>Olympus OM‑D E‑M1 Mark II</h3>
+        <div class="media">
+          <img src="https://www.zoomcamera.net/wp-content/uploads/2019/10/Olympus-OM-D-E-M1-Mark-II-Mirrorless-Micro-Four-Thirds-Camera-with-12-40mm-2.jpg" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ Live MOS 20.4 ล้าน</p>
+            <p>ระบบป้องกันภาพสั่นไหว 5 แกน</p>
+            <p>ถ่ายวิดีโอได้ถึง 4K DCI/UHD</p>
+            <p>ถ่ายภาพต่อเนื่อง 15 fps</p>
+            <div class="price">THB 103,990.00</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product card 5 -->
+      <article class="product">
+        <h3>Olympus PEN E‑P7</h3>
+        <div class="media">
+          <img src="https://www.zoomcamera.net/wp-content/uploads/2019/07/Olympus-E-PL7-1.jpg" alt="product"/>
+          <div class="specs">
+            <p>Live MOS Micro Four Thirds</p>
+            <p>กันสั่นในตัว 5 แกน</p>
+            <p>ถ่ายวิดีโอ 4K 30p</p>
+            <p>จอสัมผัสพับได้</p>
+            <div class="price">THB 22,000.00</div>
+          </div>
+        </div>
+      </article>
+
+      </div>
+
+    <!-- more product rows (copy/paste as needed) -->
+
+  </main>
+
+</body>
+</html>
+

@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Camera Info Web</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#e9e9e9;
+      --card:#f6f6f6;
+      --muted:#000000;
+      --accent:#c41a1a;
+      --shadow: 0 6px 0 rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: 'Montserrat', system-ui, -apple-system, Arial;
+      background:var(--bg);
+      color:#747474;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* top navbar */
+    .topbar{
+      background:linear-gradient(#fff,#f3f3f3);
+      box-shadow:0 4px 8px rgba(0,0,0,0.12);
+      padding:18px 36px;
+      display:flex;
+      align-items:center;
+      gap:28px;
+      position:sticky;
+      top:0;
+      z-index:50;
+    }
+    .logo{
+      background:#6e6e6e;
+      color:#fff;
+      padding:18px 36px;
+      border-radius:2px;
+      font-weight:600;
+      letter-spacing:1px;
+      font-size:20px;
+    }
+    .nav { display:flex; gap:34px; align-items:center; margin:0 auto; }
+    .nav a{
+      text-decoration:none;
+      font-size:30px;
+      color:#222;
+      text-shadow:0 2px 0 rgba(0,0,0,0.12);
+      padding:8px 14px;
+      border-radius:4px;
+    }
+    .nav a.active{
+      background:var(--accent);
+      color:#fff;
+      box-shadow:var(--shadow);
+      font-weight:700;
+    }
+
+    /* hero banner */
+    .hero-wrap{
+      padding:18px 40px 0 40px;
+    }
+    .hero{
+      width:100%;
+      background:#000;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 6px 14px rgba(0,0,0,0.25);
+      padding:12px;
+    }
+    .hero img{display:block; width:100%; height:200px; object-fit:cover; border-radius:10px}
+
+    /* category buttons */
+    .cats{display:flex; justify-content:center; gap:18px; padding:26px 12px}
+    .cat{background:var(--card); padding:14px 26px; border-radius:10px; box-shadow:var(--shadow); font-size:18px}
+    .cat.active{background:#7b7b7b; color:#fff}
+
+    /* product grid */
+    .container{max-width:1200px; margin:8px auto; padding:0 24px 80px}
+    .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:28px; margin-top:18px}
+    .product{
+      background:var(--card);
+      padding:28px;
+      border-radius:18px;
+      box-shadow:0 6px 0 rgba(0,0,0,0.06);
+      border:1px solid rgba(0,0,0,0.06);
+    }
+    .product h3{ text-align:center; color:var(--muted); font-weight:400; margin:0 0 14px}
+    .media{display:flex; gap:28px; align-items:center}
+    .media img{width:240px; max-width:40%; border-radius:8px; box-shadow:0 8px 30px rgba(0, 0, 0, 0.12); background:#fff}
+    .specs{flex:1}
+    .bar{height:16px; background:#d0d0d0; border-radius:8px; margin:10px 0}
+    .price{ text-align:right; font-size:20px; color:var(--muted); margin-top:18px }
+
+    /* responsive */
+    @media(max-width:900px){
+      .nav a{font-size:20px}
+      .hero img{height:140px}
+      .grid{grid-template-columns:1fr}
+      .media img{max-width:45%}
+    }
+    @media(max-width:520px){
+      .logo{padding:12px 20px; font-size:16px}
+      .nav{gap:8px}
+      .nav a{display:none}
+      .nav a.active{display:inline-block}
+      .hero img{height:120px}
+      .media{flex-direction:column; align-items:center}
+      .media img{width:70%; max-width:300px}
+      .price{text-align:center}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="Homeweb.html">
+    <img src="https://img5.pic.in.th/file/secure-sv1/logowebmain.png" alt="logo"></a>
+    <nav class="nav">
+      <a class="active" href="canon-eosr.html">Canon</a>
+      <a href="sony.html">Sony</a>
+      <a href="nikon-dslr.html">Nikon</a>
+      <a href="Fujifilm-mrl.html">Fujifilm</a>
+      <a href="Olympus.html">Olympus</a>
+    </nav>
+  </header>
+
+  <style>
+  .hero-wrap {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 18px; /* 👈 เพิ่มขอบมน */
+  }
+
+  .hero-slider {
+    position: relative;
+    width: 100%;
+    height: 400px; /* ปรับได้ */
+    border-radius: 18px; /* 👈 บังคับขอบมน */
+    overflow: hidden;    /* ให้ภาพไม่ทะลุขอบ */
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1s ease;
+    border-radius: 18px;  /* 👈 ขอบมนในสไลด์ */
+    overflow: hidden;
+  }
+
+  .hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 18px; /* 👈 ขอบมนให้ตัวภาพ */
+  }
+
+  .hero-slide.active {
+    opacity: 1;
+  }
+</style>
+
+<section class="hero-wrap">
+  <div class="hero-slider">
+
+    <!-- Slide 1 -->
+    <div class="hero-slide active">
+      <img src="https://shop.sg.canon/media/mageplaza/blog/post/uploads/2018/09/Canon_Corporate_Site_Banner.jpg" alt="slide1" />
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="hero-slide">
+      <img src="https://livingasean.com/wp-content/uploads/2016/05/Canon-banner.jpg" alt="slide2" />
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="hero-slide">
+      <img src="https://britishcinematographer.co.uk/wp-content/uploads/2021/05/CVP-Canon-in-Motion-Social-Banner-Proof1.png" alt="slide3" />
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="hero-slide">
+      <img src="https://images.pexels.com/photos/2927762/pexels-photo-2927762.jpeg?cs=srgb&dl=pexels-adilgkkya-2927762.jpg&fm=jpg" alt="slide4" />
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="hero-slide">
+      <img src="https://d1hjkbq40fs2x4.cloudfront.net/2016-10-21/files/EOSM5-IG.jpg" alt="slide5" />
+    </div>
+
+  </div>
+</section>
+
+<script>
+  let index = 0;
+  const slides = document.querySelectorAll(".hero-slide");
+
+  setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+  }, 4000);
+</script>
+
+  <main class="container">
+    <div class="cats">
+      <!-- ปุุ่ม 1 -->
+      <div class="cat active"
+     onclick="location.href='canon-eosr.html'
+     "style="cursor:pointer;">กล้อง MRL (EOS R)</div>
+      <!-- ปุุ่ม 2 -->
+      <div class="cat"
+     onclick="location.href='canon-dslr.html'
+    "style="cursor:pointer;">กล้อง DSLR (EOS)</div>
+      <!-- ปุุ่ม 3 -->
+      <div class="cat"
+     onclick="location.href='canon-eosm.html'
+    "style="cursor:pointer;">กล้อง MRL (EOS M)</div>
+    </div>
+
+    <div class="grid">
+      <!-- Product card 1 -->
+      <article class="product">
+        <h3>Canon EOS R1 (Body)</h3>
+        <div class="media">
+          <img src="https://th.canon/media/image/2024/07/16/f2f3f08189034a76848544428717bb43_EOS+R1+Body+Front.png" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ CMOS 24.2 ล้านพิกเซล</p>
+            <p>ระบบ AI Focus ที่ล้ำสมัย</p>
+            <p>บันทึกวิดีโอได้สูงสุด 6K 60p</p>
+            <p>ถ่ายต่อเนื่องได้สูงสุด 40fps</p>
+            <div class="price">THB 219,000.00</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product card 2 -->
+      <article class="product">
+        <h3>Canon EOS R3 (Body)</h3>
+        <div class="media">
+          <img src="https://th.canon/media/image/2021/09/11/06fc9d1e5daf492fa995c8168749d1de_R3-front.png" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ CMOS 24.1 ล้านพิกเซล</p>
+            <p>ระบบ AI Focus เร็วและความแม่นยำสูง</p>
+            <p>ถ่ายต่อเนื่องได้สูงสุด 30 ภาพต่อวินาที</p>
+            <p>วิดีโอคุณภาพสูง 6K RAW </p>
+            <div class="price">THB 156,800.00</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product card 3 -->
+      <article class="product">
+        <h3>Canon EOS R5 (Body)</h3>
+        <div class="media">
+          <img src="https://th.canon/media/image/2020/07/04/862a1f43feed4fab85897aee45b6324c_R5_Front_BODY.png" alt="product"/>
+          <div class="specs">
+            <p>เซนเซอร์ความละเอียด 45 ล้านพิกเซล</p>
+            <p>ระบบป้องกันภาพสั่นไหวในตัว</p>
+            <p>ระบบออโต้โฟกัส Dual Pixel CMOS</p>
+            <p>ถ่ายภาพต่อเนื่องความเร็วสูง 20 fps</p>
+            <div class="price">THB 122,900.00</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product card 4 -->
+      <article class="product">
+        <h3>Canon EOS R6 (Body)</h3>
+        <div class="media">
+          <img src="https://th.canon/media/image/2020/07/04/20563b52bb03410493a7ae03674f3cbf_R6_Front_BODY.png" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ฟูลเฟรม 20.1 ล้านพิกเซล</p>
+            <p>ระบบป้องกันภาพสั่นไหวในตัว</p>
+            <p>ถ่ายภาพต่อเนื่องสูงสุด 20 ภาพต่อวินาที</p>
+            <p>ระบบออโต้โฟกัสที่แม่นยำ</p>
+            <div class="price">THB 71,900.00</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product card 5 -->
+      <article class="product">
+        <h3>Canon EOS R7 (Body)</h3>
+        <div class="media">
+          <img src="https://www.zoomcamera.net/wp-content/uploads/2022/05/Canon-EOS-R7-Mirrorless-Camera-4.jpg" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ APS-C ความละเอียด 32.5 ล้าน</p>
+            <p>ถ่ายภาพต่อเนื่องสูงสุด 30 fps</p>
+            <p>วิดีโอ 4K 60p และระบบกันสั่นในตัว</p>
+            <p>ออโตโฟกัสแบบ Dual Pixel CMOS</p>
+            <div class="price">THB 46,800.00</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product card 6 -->
+      <article class="product">
+        <h3>Canon EOS R8 (Body)</h3>
+        <div class="media">
+          <img src="https://th.canon/media/image/2023/02/06/043bb05cba0443f6ac0cb8901df63274_EOS+R8+Body+Front+Slant+Left.png" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ฟูลเฟรม 24.2 ล้านพิกเซล</p>
+            <p>ถ่ายภาพความเร็วสูงถึง 40 เฟรมต่อวินาที</p>
+            <p>ระบบโฟกัสอัจฉริยะ EOS iTR AF X</p>
+            <p>บันทึกความละเอียด 4K 60p</p>
+            <div class="price">THB 39,700.00</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product card 7 -->
+      <article class="product">
+        <h3>Canon EOS R10 (Body)</h3>
+        <div class="media">
+          <img src="https://www.zoomcamera.net/wp-content/uploads/2022/05/Canon-EOS-R10-Mirrorless-Camera-3.jpg" alt="product"/>
+          <div class="specs">
+            <p>เซนเซอร์ APS-C ความละเอียด 24.2 ล้าน</p>
+            <p>ถ่ายภาพต่อเนื่องสูงสุด 23 ภาพต่อวินาที</p>
+            <p>บันทึกวิดีโอ 4K UHD ที่ 60p</p>
+            <p>ระบบ Dual Pixel CMOS AF II</p>
+            <div class="price">THB 32,900.00</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product card 8 -->
+      <article class="product">
+        <h3>Canon EOS R50 (Body)</h3>
+        <div class="media">
+          <img src="https://th.canon/media/image/2023/02/06/aa40086891434857aa3e5c6465f427a0_EOS+R50+Black+Front+Slant+Left.png" alt="product"/>
+          <div class="specs">
+            <p>เซนเซอร์ APS-C ความละเอียด 24.2 ล้าน</p>
+            <p>ถ่ายภาพต่อเนื่องได้สูงสุด 15 ภาพต่อวินาที</p>
+            <p>ถ่ายวิดีโอได้สูงสุด 4K 30p แบบไม่ครอป</p>
+            <p>พร้อมชิปประมวลผล DIGIC X </p>
+            <div class="price">THB 21,990.00</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product card 9 -->
+      <article class="product">
+        <h3>Canon EOS RP (Body)</h3>
+        <div class="media">
+          <img src="https://th.canon/media/image/2019/02/14/0c3e192aeec6431ba4835b498141a23e_EOS+RP+Body+Front.png" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ฟูลเฟรม 26.2 ล้านพิกเซล</p>
+            <p>ระบบ Dual Pixel CMOS AF 4,779 จุด</p>
+            <p>รองรับการถ่ายวิดีโอ 4K</p>
+            <p>ขนาดกะทัดรัด น้ำหนักเบาเพียง 485 กรัม</p>
+            <div class="price">THB 24,400.00</div>
+          </div>
+        </div>
+      </article>
+      
+      <!-- Product card 10 -->
+      <article class="product">
+        <h3>Canon EOS R (Body)</h3>
+        <div class="media">
+          <img src="https://th.canon/media/image/2018/09/05/2d6ec79e270e43be9694618978e26939_EOS+R+Body+Front.png" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ฟูลเฟรม 30.3 ล้านพิกเซล</p>
+            <p>ระบบ Dual Pixel CMOS AF 5,655 จุด</p>
+            <p>ถ่ายภาพต่อเนื่อง 8 ภาพต่อวินาที</p>
+            <p>ถ่ายวิดีโอ 4K</p>
+            <div class="price">THB 82,990.00</div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- more product rows (copy/paste as needed) -->
+
+  </main>
+
+</body>
+
+</html>

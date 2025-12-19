@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Camera Info Web</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#e9e9e9;
+      --card:#f6f6f6;
+      --muted:#000000;
+      --accent:#0b7bd6; /* สีแบรนด์ Sony */
+      --shadow: 0 6px 0 rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: 'Montserrat', system-ui, -apple-system, Arial;
+      background:var(--bg);
+      color:#555555;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .topbar{
+      background:linear-gradient(#fff,#f3f3f3);
+      box-shadow:0 4px 8px rgba(0,0,0,0.12);
+      padding:18px 36px;
+      display:flex;
+      align-items:center;
+      gap:28px;
+      position:sticky;
+      top:0;
+      z-index:50;
+    }
+    .logo{
+      background:#6e6e6e;
+      color:#fff;
+      padding:18px 36px;
+      border-radius:2px;
+      font-weight:600;
+      letter-spacing:1px;
+      font-size:20px;
+    }
+    .nav { display:flex; gap:34px; align-items:center; margin:0 auto; }
+    .nav a{
+      text-decoration:none;
+      font-size:30px;
+      color:#222;
+      text-shadow:0 2px 0 rgba(0,0,0,0.12);
+      padding:8px 14px;
+      border-radius:4px;
+    }
+    .nav a.active{
+      background:var(--accent);
+      color:#fff;
+      box-shadow:var(--shadow);
+      font-weight:700;
+    }
+
+    .hero-wrap{ padding:18px 40px 0 40px; }
+    .hero{
+      width:100%;
+      background:#000;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 6px 14px rgba(0,0,0,0.25);
+      padding:12px;
+    }
+    .hero img{display:block; width:100%; height:200px; object-fit:cover; border-radius:10px}
+
+    .cats{display:flex; justify-content:center; gap:18px; padding:26px 12px}
+    .cat{background:var(--card); padding:14px 26px; border-radius:10px; box-shadow:var(--shadow); font-size:18px}
+    .cat.active{background:#7b7b7b; color:#fff}
+
+    .container{max-width:1200px; margin:8px auto; padding:0 24px 80px}
+    .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:28px; margin-top:18px}
+    .product{
+      background:var(--card);
+      padding:28px;
+      border-radius:18px;
+      box-shadow:0 6px 0 rgba(0,0,0,0.06);
+      border:1px solid rgba(0,0,0,0.06);
+    }
+    .product h3{ text-align:center; color:var(--muted); font-weight:400; margin:0 0 14px}
+    .media{display:flex; gap:28px; align-items:center}
+    .media img{width:240px; max-width:40%; border-radius:8px; box-shadow:0 8px 30px rgba(0,0,0,0.12); background:#fff}
+    .specs{flex:1}
+    .bar{height:16px; background:#d0d0d0; border-radius:8px; margin:10px 0}
+    .price{ text-align:right; font-size:20px; color:var(--muted); margin-top:18px }
+
+    @media(max-width:900px){
+      .nav a{font-size:20px}
+      .hero img{height:140px}
+      .grid{grid-template-columns:1fr}
+      .media img{max-width:45%}
+    }
+    @media(max-width:520px){
+      .logo{padding:12px 20px; font-size:16px}
+      .nav{gap:8px}
+      .nav a{display:none}
+      .nav a.active{display:inline-block}
+      .hero img{height:120px}
+      .media{flex-direction:column; align-items:center}
+      .media img{width:70%; max-width:300px}
+      .price{text-align:center}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="Homeweb.html">
+    <img src="https://img5.pic.in.th/file/secure-sv1/logowebmain.png" alt="logo"></a>
+    <nav class="nav">
+      <a href="canon-dslr.html">Canon</a>
+      <a class="active" href="sony.html">Sony</a>
+      <a href="nikon-dslr.html">Nikon</a>
+      <a href="Fujifilm-mrl.html">Fujifilm</a>
+      <a href="Olympus.html">Olympus</a>
+    </nav>
+  </header>
+
+  <style>
+  .hero-wrap {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 18px; /* 👈 เพิ่มขอบมน */
+  }
+
+  .hero-slider {
+    position: relative;
+    width: 100%;
+    height: 400px; /* ปรับได้ */
+    border-radius: 18px; /* 👈 บังคับขอบมน */
+    overflow: hidden;    /* ให้ภาพไม่ทะลุขอบ */
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1s ease;
+    border-radius: 18px;  /* 👈 ขอบมนในสไลด์ */
+    overflow: hidden;
+  }
+
+  .hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 18px; /* 👈 ขอบมนให้ตัวภาพ */
+  }
+
+  .hero-slide.active {
+    opacity: 1;
+  }
+</style>
+
+<section class="hero-wrap">
+  <div class="hero-slider">
+
+    <!-- Slide 1 -->
+    <div class="hero-slide active">
+      <img src="https://cdn.mos.cms.futurecdn.net/R6ZTUXwFRg3Ki4gbkRuJmZ.jpg" alt="slide1" />
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="hero-slide">
+      <img src="https://static.bhphotovideo.com/explora/sites/default/files/sony_a7iii_landing_page_banner_3.jpg" alt="slide2" />
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="hero-slide">
+      <img src="https://images.unsplash.com/photo-1594672581051-8242a50bf913?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHNvbnklMjBjYW1lcmF8ZW58MHx8MHx8fDA%3D" alt="slide3" />
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="hero-slide">
+      <img src="https://images.unsplash.com/photo-1525101479959-c3e73fd498ab?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c29ueSUyMGFscGhhfGVufDB8fDB8fHww" alt="slide4" />
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="hero-slide">
+      <img src="https://images.ctfassets.net/bht415zek091/5QvPFu4dfxLfwz8AtrQqU0/0cb459d1bddf4038896d4cd38b24325e/Sony-Rx100-VII-web.jpg" alt="slide5" />
+    </div>
+
+  </div>
+</section>
+
+<script>
+  let index = 0;
+  const slides = document.querySelectorAll(".hero-slide");
+
+  setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+  }, 4000);
+</script>
+
+  <main class="container">
+    <div class="cats">
+      <div class="cat"
+     onclick="location.href='sony.html'
+    "style="cursor:pointer;">Alpha (Mirrorless)</div>
+
+      <div class="cat active"
+     onclick="location.href='sonycp.html'
+    "style="cursor:pointer;">Compact</div>
+    </div>
+
+    <div class="grid">
+      <article class="product">
+        <h3>Sony RX1R III</h3>
+        <div class="media">
+          <img src="https://www.zoomcamera.net/wp-content/uploads/2025/07/Sony-RX1R-III-Compact-Digital-Camera-1.jpg" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ฟูลเฟรม 61 ล้าน</p>
+            <p>ชิปประมวลผล BIONZ XR</p>
+            <p>ระบบโฟกัส Fast Hybrid AF 693 จุด</p>
+            <p>เลนส์ ZEISS Sonnar T* 35mm f/2</p>
+            <div class="price">THB 154,990.00</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="product">
+        <h3>Sony RX100 VII</h3>
+        <div class="media">
+          <img src="https://www.sony.co.th/image/fa5e09f443737954476853d67fb65a13?fmt=png-alpha&wid=330" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ 1 นิ้ว ความละเอียด 20.1 ล้าน</p>
+            <p>เลนส์ ZEISS Vario-Sonnar T</p>
+            <p>ระบบ Real-Time Tracking/Eye AF</p>
+            <p>ถ่ายภาพต่อเนื่องสูงสุด 20 fps</p>
+            <div class="price">THB 38,990.00</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="product">
+        <h3>Sony ZV-1</h3>
+        <div class="media">
+          <img src="https://www.zoomcamera.net/wp-content/uploads/2020/05/Sony-ZV-1-Digital-Camera-12.jpg" alt="product"/>
+          <div class="specs">
+            <p>เซ็นเซอร์ CMOS 1 นิ้ว 20.1 ล้าน</p>
+            <p>เลนส์ ZEISS Vario-Sonnar T* 24-70</p>
+            <p>การบันทึกวิดีโอ 4K</p>
+            <p> หน้าจอ LCD พับออกด้านข้าง</p>
+            <div class="price">THB 22,990.00</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="product">
+        <h3>Sony Cyber-shot W830</h3>
+        <div class="media">
+          <img src="https://img.priceza.com/img1/7077/2355/7077-20251028144839-217617092831665512.jpg" alt="product"/>
+          <div class="specs">
+            <p>ซ็นเซอร์ความละเอียด 20.1 ล้าน</p>
+            <p>เลนส์ Carl Zeiss พร้อมระบบกันสั่น</p>
+            <p>ระบบกันสั่น Optical SteadyShot</p>
+            <p>ถ่ายวิดีโอได้ที่ความละเอียด HD 720p</p>
+            <div class="price">THB 8,990</div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+  </main>
+</body>
+
+</html>
+

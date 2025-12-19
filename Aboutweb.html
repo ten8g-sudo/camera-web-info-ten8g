@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Camera Body info ten8g</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#e9e9e9;
+      --card:#f6f6f6;
+      --muted:#9b9b9b;
+      --accent:#c41a1a;
+      --shadow: 0 6px 0 rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: 'Montserrat', system-ui, -apple-system, Arial;
+      background:var(--bg);
+      color:#222;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* top navbar */
+    .topbar{
+      background:linear-gradient(#fff,#f3f3f3);
+      box-shadow:0 4px 8px rgba(0,0,0,0.12);
+      padding:18px 36px;
+      display:flex;
+      align-items:center;
+      gap:28px;
+      position:sticky;
+      top:0;
+      z-index:50;
+    }
+    .logo{
+      background:#6e6e6e;
+      color:#fff;
+      padding:18px 36px;
+      border-radius:2px;
+      font-weight:600;
+      letter-spacing:1px;
+      font-size:20px;
+    }
+    .nav { display:flex; gap:34px; align-items:center; margin: 1px; }
+    .nav a{
+      text-decoration:none;
+      font-size:30px;
+      color:#222;
+      text-shadow:0 2px 0 rgba(0,0,0,0.12);
+      padding:8px 14px;
+      border-radius:4px;
+    }
+    .nav a.active{
+      background:var(--accent);
+      color:#fff;
+      box-shadow:var(--shadow);
+      font-weight:700;
+    }
+
+    /* hero banner */
+    .hero-wrap{
+      padding:18px 40px 0 40px;
+    }
+    .hero{
+      width:100%;
+      background:#000;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 6px 14px rgba(0,0,0,0.25);
+      padding:12px;
+    }
+    .hero img{display:block; width:100%; height:200px; object-fit:cover; border-radius:10px}
+
+    /* category buttons */
+    .cats{display:flex; justify-content:center; gap:18px; padding:26px 12px}
+    .cat{background:var(--card); padding:14px 26px; border-radius:10px; box-shadow:var(--shadow); font-size:18px}
+    .cat.active{background:#7b7b7b; color:#fff}
+
+    /* product grid */
+    .container{max-width:1200px; margin:8px auto; padding:0 24px 80px}
+    .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:28px; margin-top:18px}
+    .product{
+      background:var(--card);
+      padding:28px;
+      border-radius:18px;
+      box-shadow:0 6px 0 rgba(0,0,0,0.06);
+      border:1px solid rgba(0,0,0,0.06);
+    }
+    .product h3{ text-align:center; color:var(--muted); font-weight:400; margin:0 0 14px}
+    .media{display:flex; gap:28px; align-items:center}
+    .media img{width:240px; max-width:40%; border-radius:8px; box-shadow:0 8px 30px rgba(0,0,0,0.12); background:#fff}
+    .specs{flex:1}
+    .bar{height:16px; background:#d0d0d0; border-radius:8px; margin:10px 0}
+    .price{ text-align:right; font-size:20px; color:var(--muted); margin-top:18px }
+
+    /* responsive */
+    @media(max-width:900px){
+      .nav a{font-size:20px}
+      .hero img{height:140px}
+      .grid{grid-template-columns:1fr}
+      .media img{max-width:45%}
+    }
+    @media(max-width:520px){
+      .logo{padding:12px 20px; font-size:16px}
+      .nav{gap:8px}
+      .nav a{display:none}
+      .nav a.active{display:inline-block}
+      .hero img{height:120px}
+      .media{flex-direction:column; align-items:center}
+      .media img{width:70%; max-width:300px}
+      .price{text-align:center}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <img src="https://img5.pic.in.th/file/secure-sv1/logowebmain.png" alt="logo"/>
+    <nav class="nav">
+      <a class="" href="Homeweb.html">Home</a>
+      <a class="active" href="Aboutweb.html">About</a>
+    </nav>
+  </header>
+
+<style>
+  /* พื้นที่สไลด์ */
+  .hero-background {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* เต็มจอ */
+    overflow: hidden;
+  }
+
+  /* สไลด์ */
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+
+  .hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;      /* บังคับเต็มจอ */
+    object-position: center; 
+  }
+
+  .hero-slide.active {
+    opacity: 1;
+  }
+
+  /* ปุ่ม Enter กลางจอ */
+  .enter-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 16px 40px;
+    font-size: 28px;
+    border-radius: 20px;
+    background: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255,255,255,0.8);
+    transition: 0.3s;
+  }
+
+  .enter-btn:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+    box-shadow: 0 0 25px rgba(255,255,255,1);
+  }
+</style>
+
+<section class="hero-background">
+
+  <!-- Slide 1 -->
+  <div class="hero-slide active">
+    <img src="https://cdn.pickr.com.au/wp-content/uploads/2020/01/canon-eos-1dx-mk3-2020-01.jpg">
+  </div>
+
+  <!-- Slide 2 -->
+  <div class="hero-slide">
+    <img src="https://cdn.mos.cms.futurecdn.net/EAw4nvreCkUKmrQv8qVKYo.jpg">
+  </div>
+
+  <!-- Slide 3 -->
+  <div class="hero-slide">
+    <img src="https://www.nikon.co.th/media/wysiwyg/z6/marketing-hero-z6-mobile.jpg">
+  </div>
+
+  <!-- Slide 4 -->
+  <div class="hero-slide">
+    <img src="https://www.popphoto.com/uploads/2022/02/06/fujifilm-x-t5-camera-front.jpg?auto=webp&width=1440&height=960.48">
+  </div>
+
+  <!-- Slide 5 -->
+  <div class="hero-slide">
+    <img src="https://usercontent.one/wp/www.olympuspassion.com/wp-content/uploads/2020/07/200301_P3010009_4015_2000px_Web.jpg?media=1756486299">
+  </div>
+
+  <!-- ปุ่ม Enter -->
+<style>
+  .enter-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 18px 48px;
+    font-size: 30px;
+    font-weight: 700;
+    border-radius: 20px;
+    cursor: pointer;
+    color: #fff;
+
+    /* Glassmorphism */
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    /* Glow */
+    box-shadow:
+      0 0 20px rgba(255,255,255,0.9),
+      0 0 40px rgba(255,255,255,0.6),
+      0 0 60px rgba(255,255,255,0.4);
+
+    transition: 0.3s ease;
+  }
+
+  .enter-btn:hover {
+    transform: translate(-50%, -50%) scale(1.07);
+    box-shadow:
+      0 0 30px rgba(255,255,255,1),
+      0 0 60px rgba(255,255,255,0.8),
+      0 0 90px rgba(255,255,255,0.7);
+  }
+</style>
+
+<button class="enter-btn">
+  <p>จัดทำโดย นายภรภัทร ธนะขว้าง ชั้นปีที่ 3/1</p>
+  แผนก เทคโนโลยีสารสนเทศ<br>
+  ติดต่อ : 08กล้วย 67หวี 567เคลือ
+
+</button>
+
+
+
+</section>
+
+<script>
+  let index = 0;
+  const slides = document.querySelectorAll(".hero-slide");
+
+  setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+  }, 4000);
+</script>
+
+
+</body>
+</html>
